@@ -5,15 +5,19 @@ package teste.rest.model;
  */
 public class AccountModel {
     private int id;
-    private String clientName;
-    private String clientPassword;
-    private double balance;
+    private Integer numberAccount;
+    private String  clientPassword;
+    private double  balance;
+    private Integer agency;
+    private Integer bank;
 
     public AccountModel() {
         this.id = 1;
-        this.clientName = "Client Test";
+        this.numberAccount = 1249;
         this.clientPassword = "password";
-        this.balance=balance;
+        this.balance= 2.0;
+        this.agency = 1515;
+        this.bank =1;
     }
 
     public int getId() {
@@ -24,12 +28,12 @@ public class AccountModel {
         this.id = id;
     }
 
-    public String getClientName() {
-        return clientName;
+    public Integer getNumberAccount() {
+        return numberAccount;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setNumberAccount(Integer numberAccount) {
+        this.numberAccount = numberAccount;
     }
 
     public String getClientPassword() {
@@ -47,4 +51,22 @@ public class AccountModel {
     public void setBalance(double balance) {
         this.balance = balance;
     }
+
+    public Integer getAgency() {
+        return agency;
+    }
+
+    public void setAgency(Integer agency) {
+        this.agency = agency;
+    }
+
+    public Integer getBank() {
+        return bank;
+    }
+
+    public void setBank(Integer bank) {
+        this.bank = bank;
+    }
+
+
 }
