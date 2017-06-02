@@ -7,11 +7,13 @@ public class AccountModel {
     private int id;
     private String clientName;
     private String clientPassword;
+    private double balance;
 
     public AccountModel() {
         this.id = 1;
         this.clientName = "Client Test";
         this.clientPassword = "password";
+        this.balance=balance;
     }
 
     public int getId() {
@@ -36,5 +38,13 @@ public class AccountModel {
 
     public void setClientPassword(String clientPassword) {
         this.clientPassword = clientPassword;
+    }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 }
