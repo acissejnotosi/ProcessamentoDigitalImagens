@@ -10,6 +10,7 @@ public class AccountModel {
     private double  balance;
     private Integer agency;
     private Integer bank;
+    private String type;
 
     public AccountModel() {
         this.id = 1;
@@ -18,6 +19,7 @@ public class AccountModel {
         this.balance= 2.0;
         this.agency = 1515;
         this.bank =1;
+        this.type="Poupança";
     }
 
     public int getId() {
@@ -68,5 +70,23 @@ public class AccountModel {
         this.bank = bank;
     }
 
+    public String getType() {
+        return type;
+    }
 
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public synchronized boolean deposit(double value){
+        balance = balance + value;
+        return true;
+    }
+    public synchronized boolean withdraw(double value){
+        balance = balance - value;
+        return true;
+    }
+    public synchronized double getbalance(double value){
+       return value;
+    }
 }

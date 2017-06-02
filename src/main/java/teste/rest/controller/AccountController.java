@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import teste.rest.Service.AccountService;
 import teste.rest.model.AccountModel;
+import teste.rest.model.TransactionModel;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,11 +48,19 @@ public class AccountController {
     }
 
     @RequestMapping(path="/account/deposit", method= RequestMethod.POST)
-    public ResponseEntity<?> postDeposit(AccountModel input){
-        if(input!=null&& input.getNumberAccount()!=null && input.getNumberAccount()!=null)
-            return new ResponseEntity<>(accountService.createAccount(input,accounts), HttpStatus.OK);
+    public ResponseEntity<?> postDeposit(TransactionModel input){
+        if(input!=null&& input.getToken()!=null && input.getToken()!=null)
+            return new ResponseEntity<>(accountService.deposit(input,accounts), HttpStatus.OK);
         return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+
+    @RequestMapping(path="/account/trasfer", method= RequestMethod.POST)
+    public ResponseEntity<?> postTransfer(TransactionModel input){
+        if(input!=null&& input.getToken()!=null && input.getToken()!=null)
+            return new ResponseEntity<>(accountService.transfer(input,accounts), HttpStatus.OK);
+        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
 
     @RequestMapping(path="/account/list", method= RequestMethod.GET)
     public ResponseEntity<?> getAll(){

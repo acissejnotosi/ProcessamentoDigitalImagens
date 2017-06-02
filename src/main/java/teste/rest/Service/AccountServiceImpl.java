@@ -3,6 +3,7 @@ package teste.rest.Service;
 import org.springframework.stereotype.Service;
 import teste.rest.model.AccountModel;
 import teste.rest.model.Authentication;
+import teste.rest.model.TransactionModel;
 
 import java.util.*;
 
@@ -26,15 +27,37 @@ public class AccountServiceImpl implements AccountService {
         return 0;
     }
 
-
     @Override
-    public synchronized  boolean deposit(AccountModel input) {
+    public boolean transfer(TransactionModel input, Map<String, AccountModel> accounts) {
+        AccountModel accountModel =accounts.get(input.getToken());
+        String keys = findByAccount(accounts,input);
+        if(input.getValue()>0)
+            if(keys!=null)
+                accountModel.deposit(input.getValue());
+        //TODO
+
 
         return false;
     }
 
     @Override
-    public synchronized boolean withdraw(AccountModel input) {
+    public  boolean deposit(TransactionModel input,Map<String, AccountModel> accounts) {
+
+        AccountModel accountModel =accounts.get(input.getToken());
+        if(input.getValue()>0) {
+            if (accountModel.withdraw(input.getValue()))
+
+        }
+
+        return false;
+    }
+
+    @Override
+    public boolean withdraw(TransactionModel input, Map<String, AccountModel> accounts) {
+        AccountModel accountModel =accounts.get(input.getToken());
+        if(input.getValue()>0)
+            return accountModel.withdraw(input.getValue());
+
         return false;
     }
 
@@ -53,4 +76,22 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountModelList;
     }
+
+    public String findByAccount(Map<String, AccountModel> account,TransactionModel input) {
+        Set<String> chaves = account.keySet();
+        for (Iterator<String> iterator = chaves.iterator(); iterator.hasNext();)
+        {
+            String chave = iterator.next();
+            if(chave != null) {
+                if(account.get(chave).getNumberAccount()==input.getNumberAccount())
+                    if(account.get(chave).getAgency()==input.getAgency())
+                        return chave;
+            }
+        }
+        System.out.printf("Not Foud Client!!!");
+        return null;
+
+
+    }
+
 }
