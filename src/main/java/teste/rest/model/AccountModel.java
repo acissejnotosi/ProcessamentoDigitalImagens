@@ -3,6 +3,7 @@ package teste.rest.model;
 /**
  * Created by allan on 02-06-2017.
  */
+
 public class AccountModel {
     private int id;
     private Integer numberAccount;

@@ -2,7 +2,7 @@ package teste.rest.Service;
 
 import org.springframework.stereotype.Service;
 import teste.rest.model.AccountModel;
-import teste.rest.model.Authentication;
+import teste.rest.model.AuthenticationModel;
 import teste.rest.model.TransactionModel;
 
 import java.util.*;
@@ -15,16 +15,18 @@ public class AccountServiceImpl implements AccountService {
 
 
     @Override
-    public Authentication createAccount(AccountModel input, Map<String, AccountModel> account) {
+    public AuthenticationModel createAccount(AccountModel input, Map<String, AccountModel> account) {
         String token = UUID.randomUUID().toString();
         AccountModel accountModel = new AccountModel();
         account.put(token,accountModel);
-        return new Authentication(token);
+        return new AuthenticationModel(token);
     }
 
     @Override
-    public double getBalance(AccountModel input) {
-        return 0;
+    public double getBalance(String token, Map<String, AccountModel> accounts) {
+
+        return accounts.get(token).getBalance();
+
     }
 
     @Override

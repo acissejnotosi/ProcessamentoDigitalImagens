@@ -1,49 +1,39 @@
 #!/usr/bin/python
 #from urllib.request import urlopen
-import urllib.request, json, sys
-from tkinter import *
+import urllib.request, json, sys,requests
+#from tkinter import *
 #import urllib, urllib, json, sys
 
 print ("Welcome to REST Bank!")
 
-data = {"id":1,"clientName":"Client Test","clientPassword":"password"}
+data = {"id":1,"clientName":"Client","clientPassword":"password"}
 
-#req = urllib.Request('http://localhost:8080/account/new')
-#req.add_header('Content-Type', 'application/json') 	
-#response = urllib.urlopen(req, json.dumps(data))
 myurl = "http://localhost:8080/account/new"
-req = urllib.request.Request(myurl)
-req.add_header('Content-Type', 'application/json; charset=utf-8')
-jsondata = json.dumps(data)
-jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
-req.add_header('Content-Length', len(jsondataasbytes))
-print (jsondataasbytes)
-response = urllib.request.urlopen(req, jsondataasbytes) 
-print(response.read().decode('utf8'))
-name =input("Yor name: ")
-pwd =input("Password: ")
+headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+r = requests.post(myurl, data=json.dumps(data), headers=headers)
+print ("Mykey: "+r.json()["token"])
+myKeyJson = r.json()
+myKeyTex = r.text
+print (myKeyTex)
+print
 
- 
+
+
+pwd = input("pwd: ")
+
 pwdAgain = input("Again: ")
 while pwd != pwdAgain:
-	pwdAgain =input("Again: ")
-	
+ caspwdAgain =input("Again: ")
 
 
 
-request = urllib.Request("http://localhost:8080/restful-bank/account?clientName=" + name + "&clientPassword=" + pwd)
-handler = urllib.urlopen(request)
-data = json.loads(handler.read())
-
-print ("Created account " + data["accountNumber"])
 
 def balance():
-	acc =input("Account number: ")
-	pwd =input("Password: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/balance?accountNumber=" + acc + "&clientPassword=" + pwd)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
-	print ("Balance: " + data["balance"])
+    myurl = "http://localhost:8080/account/balance"
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data= r.json(), headers=headers)
+    print ("Balance: ",r.text)
+
 
 def deposit():
 	acc =input("Account number: ")
