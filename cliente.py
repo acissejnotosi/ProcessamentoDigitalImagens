@@ -1,21 +1,21 @@
 #!/usr/bin/python
 #from urllib.request import urlopen
-import urllib.request, json, sys,requests
+import urllib.request, json, sys,requests,ast
 #from tkinter import *
 #import urllib, urllib, json, sys
 
 print ("Welcome to REST Bank!")
 
-data = {"id":1,"clientName":"Client","clientPassword":"password"}
+data = {"id":1,"clientName":12,"clientPassword":12}
 
 myurl = "http://localhost:8080/account/new"
 headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
 r = requests.post(myurl, data=json.dumps(data), headers=headers)
 print ("Mykey: "+r.json()["token"])
 myKeyJson = r.json()
-myKeyTex = r.text
+myKeyTex =ast.literal_eval(r.text)
 print (myKeyTex)
-print
+
 
 
 
@@ -31,18 +31,18 @@ while pwd != pwdAgain:
 def balance():
     myurl = "http://localhost:8080/account/balance"
     headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
-    r = requests.post(myurl, data= r.json(), headers=headers)
+    r = requests.post(myurl, data=json.dumps(myKeyTex), headers=headers)
     print ("Balance: ",r.text)
 
 
 def deposit():
 	acc =input("Account number: ")
-	pwd =input("Password: ")
-	target =input("Target account number: ")
+	agence =input("Target account number: ")
 	amount =input("Amount: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/deposit?accountNumber=" + acc + "&clientPassword=" + pwd + "&targetAccountNumber=" + target + "&amount=" + amount)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
+	data = {"numberAccount":acc,"agency":agence,"value":amount}
+	myurl = "http://localhost:8080/account/deposit"
+	headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+	r = requests.post(myurl, data=json.dumps(data), headers=headers)
 	print ("Deposit successful")
 
 def withdraw():

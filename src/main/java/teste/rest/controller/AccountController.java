@@ -50,7 +50,7 @@ public class AccountController {
 
     @RequestMapping(path="/account/deposit", method= RequestMethod.POST)
     public ResponseEntity<?> postDeposit(@RequestBody TransactionModel input){
-        if(input!=null&& input.getToken()!=null && input.getToken()!=null)
+        if(input!=null)
             return new ResponseEntity<>(accountService.deposit(input,accounts), HttpStatus.OK);
         return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
@@ -68,10 +68,13 @@ public class AccountController {
             return new ResponseEntity<>(accountService.listAll(accounts), HttpStatus.OK);
 
     }
+
     private AuthenticationModel convertToEntity(AuthenticationModel input)  {
         AuthenticationModel post = new AuthenticationModel(input.getToken());
         return post;
     }
+
+
 
 
 

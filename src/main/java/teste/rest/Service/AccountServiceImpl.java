@@ -18,6 +18,10 @@ public class AccountServiceImpl implements AccountService {
     public AuthenticationModel createAccount(AccountModel input, Map<String, AccountModel> account) {
         String token = UUID.randomUUID().toString();
         AccountModel accountModel = new AccountModel();
+        accountModel.setAgency(input.getAgency());
+        accountModel.setBalance(input.getBalance());
+        accountModel.setNumberAccount(input.getNumberAccount());
+        accountModel.setClientPassword(input.getClientPassword());
         account.put(token,accountModel);
         return new AuthenticationModel(token);
     }
