@@ -17,8 +17,6 @@ myKeyTex =ast.literal_eval(r.text)
 print (myKeyTex)
 
 
-
-
 pwd = input("pwd: ")
 
 pwdAgain = input("Again: ")
@@ -37,9 +35,9 @@ def balance():
 
 def deposit():
 	acc =input("Account number: ")
-	agence =input("Target account number: ")
+	agency =input("Agency account number: ")
 	amount =input("Amount: ")
-	data = {"numberAccount":acc,"agency":agence,"value":amount}
+	data = {"numberAccount":acc,"agency":agency,"value":amount}
 	myurl = "http://localhost:8080/account/deposit"
 	headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
 	r = requests.post(myurl, data=json.dumps(data), headers=headers)
