@@ -45,7 +45,7 @@ def deposit():
 
 def withdraw():
 	acc =input("Account number: ")
-	pwd =input("Password: ")
+	agency =input("Agency account number: ")
 	amount =input("Amount: ")
 	request = urllib.Request("http://localhost:8080/restful-bank/withdraw?accountNumber=" + acc + "&clientPassword=" + pwd + "&amount=" + amount)
 	handler = urllib.urlopen(request)
