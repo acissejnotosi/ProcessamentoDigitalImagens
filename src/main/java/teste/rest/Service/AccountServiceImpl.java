@@ -16,14 +16,28 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public AuthenticationModel createAccount(AccountModel input, Map<String, AccountModel> account) {
-        String token = UUID.randomUUID().toString();
-        AccountModel accountModel = new AccountModel();
-        accountModel.setAgency(input.getAgency());
-        accountModel.setBalance(input.getBalance());
-        accountModel.setNumberAccount(input.getNumberAccount());
-        accountModel.setClientPassword(input.getClientPassword());
-        account.put(token,accountModel);
-        return new AuthenticationModel(token);
+        TransactionModel t = new TransactionModel();
+        t.setAgency(input.getAgency());
+        t.setNumberAccount(input.getNumberAccount());
+        String key = findByAccount(account,t);
+        if(key==null) {
+            String token = UUID.randomUUID().toString();
+            AccountModel accountModel = new AccountModel();
+            accountModel.setAgency(input.getAgency());
+            accountModel.setBalance(input.getBalance());
+            accountModel.setNumberAccount(input.getNumberAccount());
+            accountModel.setBank(input.getBank());
+            accountModel.setType(input.getType());
+            accountModel.setClientPassword(input.getClientPassword());
+            account.put(token, accountModel);
+            return new AuthenticationModel(token);
+        }else{
+            if(account.get(key).getClientPassword().equals(input.getClientPassword()))
+                if (account.get(key).getBank().equals(input.getBank()))
+                    if (account.get(key).getType().equals(input.getType()))
+                            return new AuthenticationModel(key);
+        }
+        return null;
     }
 
     @Override
@@ -34,17 +48,26 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean transfer(TransactionModel input, Map<String, AccountModel> accounts) {
-        AccountModel accountModel =accounts.get(input.getToken());
-        String keys = findByAccount(accounts,input);
-        if(input.getValue()>0)
-            if(keys!=null)
-               if(accountModel.deposit(input.getValue()));
-
-
-
-
+    public boolean transferSameBank(TransactionModel input, Map<String, AccountModel> accounts) {
+        AccountModel cliente  = accounts.get(input.getToken());
+        if(input.getBank().equals(input.getBank()))
+         if(input.getType().equals(cliente.getType())){
+             return transfer(accounts, input,input.getValue());
+         }
         return false;
+
+
+    }
+
+    @Override
+    public boolean transferBetwenbBanks(TransactionModel input, Map<String, AccountModel> accounts) {
+        AccountModel cliente  = accounts.get(input.getToken());
+        if(input.getBank().equals(input.getBank()))
+            if(input.getType().equals(cliente.getType())){
+                return transfer(accounts, input,input.getValue()+4.30);
+            }
+        return false;
+
     }
 
     @Override
@@ -104,9 +127,8 @@ public class AccountServiceImpl implements AccountService {
         {
             String chave = iterator.next();
             if(chave != null) {
-                if(account.get(chave).getNumberAccount()==input.getNumberAccount())
-                    if(account.get(chave).getAgency()==input.getAgency())
-                        if(account.get(chave).getType().equals(input.getType()))
+                if(account.get(chave).getNumberAccount().equals(input.getNumberAccount()))
+                    if(account.get(chave).getAgency().equals(input.getAgency()))
                            return chave;
             }
         }
@@ -116,10 +138,35 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
-    public String verifyDataforDeposit(Map<String, AccountModel> account,TransactionModel input)
+    public String verify(Map<String, AccountModel> account,AccountModel input)
     {
-        return  null;
+        TransactionModel t = new TransactionModel();
+        t.setAgency(input.getAgency());
+        t.setNumberAccount(input.getNumberAccount());
+        String key = findByAccount(account,t);
+        if(key!=null)
+            if(account.get(key).getClientPassword().equals(input.getClientPassword()))
+                if (account.get(key).getBank().equals(input.getBank()))
+                    if (account.get(key).getType().equals(input.getType()))
+                        return key;
+        return "false";
+
+    }
 
 
+    public boolean transfer (Map<String, AccountModel> accounts,TransactionModel input, double amout){
+
+        if(input.getToken()!=null) {
+            String keys = findByAccount(accounts, input);
+            AccountModel accountModel = accounts.get(keys);
+            AccountModel accountModel2= accounts.get(input.getToken());
+            if(input.getValue()>0&&keys!=null){
+                if(accountModel2.withdraw(amout))
+                   return accountModel.deposit(input.getValue());
+
+            }
+
+        }
+        return false;
     }
 }

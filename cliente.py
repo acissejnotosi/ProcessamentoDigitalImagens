@@ -1,27 +1,57 @@
 #!/usr/bin/python
 #from urllib.request import urlopen
-import urllib.request, json, sys,requests,ast
+import urllib.request, json, sys,requests,ast, random
 #from tkinter import *
 #import urllib, urllib, json, sys
 
 print ("Welcome to REST Bank!")
 
-data = {"id":1,"clientName":12,"clientPassword":12}
 
-myurl = "http://localhost:8080/account/new"
-headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
-r = requests.post(myurl, data=json.dumps(data), headers=headers)
-print ("Mykey: "+r.json()["token"])
-myKeyJson = r.json()
-myKeyTex =ast.literal_eval(r.text)
-print (myKeyTex)
+teste ="false"
+while  teste == "false":
+    print("1-New Account:")
+    print("2-Aready user:")
+    menu = input()
+    if menu==1:
+        myaccount = random.randint(1000,9999)
+        print(myaccount)
+        myagency = random.randint(500,999)
+        print(myagency)
+        data = {"id":1,"clientName":1,"clientPassword":1, "bank":1,"type":1,"numberAccount":myaccount,"agency":myagency}
+        myurl = "http://localhost:8080/account/new"
+        headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+        r = requests.post(myurl, data=json.dumps(data), headers=headers)
+        token = r.json()["token"]
+        pwd = input("New password: ")
+        print(token)
+        myKeyJson = r.json()
+        myKeyTex =ast.literal_eval(r.text)
+        print(myKeyTex)
+    else:
+        acc = input("Account number: ")
+        agency = input("Agency account number: ")
+        pwd = input("pwd: ")
+        bank = input("Bank: ")
+        type = input("Type: ")
+        data = {"id": 1, "clientName": 1, "clientPassword": pwd, "bank":bank , "type": type, "numberAccount": acc,"agency": agency}
+        myurl = "http://localhost:8080/account/verify"
+        headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+        r = requests.post(myurl, data=json.dumps(data), headers=headers)
+        print(r.text)
+        if r.text!="false":
+            teste="true"
+            token = r.json()["token"]
+            print(token)
+            myKeyJson = r.json()
+            myKeyTex = ast.literal_eval(r.text)
+            print(myKeyTex)
+        else:
+            print("Client doesn't exist try again")
 
-
-pwd = input("pwd: ")
 
 pwdAgain = input("Again: ")
 while pwd != pwdAgain:
- caspwdAgain =input("Again: ")
+    caspwdAgain = input("Again: ")
 
 
 
@@ -34,50 +64,67 @@ def balance():
 
 
 def deposit():
-	acc =input("Account number: ")
-	agency =input("Agency account number: ")
-	amount =input("Amount: ")
-	data = {"numberAccount":acc,"agency":agency,"value":amount}
-	myurl = "http://localhost:8080/account/deposit"
-	headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
-	r = requests.post(myurl, data=json.dumps(data), headers=headers)
-	print ("Deposit successful")
+    acc =input("Account number: ")
+    agency =input("Agency account number: ")
+    amount =input("Amount: ")
+    data = {"numberAccount":acc,"agency":agency,"value":amount}
+    myurl = "http://localhost:8080/account/deposit"
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data=json.dumps(data), headers=headers)
+    teste =  r.text
+    if teste=="true":
+        print("Deposit successful")
+    else:
+        print("Deposit faild")
+
 
 def withdraw():
-	acc =input("Account number: ")
-	agency =input("Agency account number: ")
-	amount =input("Amount: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/withdraw?accountNumber=" + acc + "&clientPassword=" + pwd + "&amount=" + amount)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
-	print ("Withdraw successful")
+    myurl = "http://localhost:8080/account/withdraw"
+    amount = input("Amount: ")
+    data = {"token":token,"value": amount}
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data=json.dumps(data), headers=headers)
+    teste = r.text
+    if teste == "true":
+        print("Withdraw successful")
+    else:
+        print("Withdraw faild")
 
 def transfer():
-	acc =input("Account number: ")
-	pwd =input("Password: ")
-	target =input("Target account number: ")
-	amount =input("Amount: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/transfer?fromAccountNumber=" + acc + "&clientPassword=" + pwd + "&toAccountNumber=" + target + "&amount=" + amount)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
-	print ("Transfer successful")
+    bank= input("Number of bank:")
+    type = input("Type of Account:")
+    acc = input("Account number: ")
+    agency = input("Agency account number: ")
+    amount = input("Amount: ")
+    data = {"numberAccount": acc, "agency": agency, "value": amount,"token":token,"bank":bank,"type":type}
+    myurl = "http://localhost:8080/account/transfer"
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data=json.dumps(data), headers=headers)
+    teste = r.text
+    if teste == "true":
+        print("Transfer successful")
+    else:
+        print("Transfer faild")
+
 
 def exit():
-	print ("Bye bye!")
-	sys.exit(0)
+    print ("Bye bye!")
+    sys.exit(0)
 
 options = {"1" : balance,
            "2" : deposit,
            "3" : withdraw,
            "4" : transfer,
            "5" : exit,
-}
+           }
 
 while True:
-	print ("1- Get Balance")
-	print ("2- Deposit")
-	print ("3- Withdraw")
-	print ("4- Transfer")
-	print ("5- Exit")
-	option =input("Select an option: ")
-	options[option]()
+    print ("1- Get Balance")
+    print ("2- Deposit")
+    print ("3- Withdraw")
+    print ("4- Transfer")
+    print ("5- Exit")
+    option =input("Select an option: ")
+    options[option]()
+
+

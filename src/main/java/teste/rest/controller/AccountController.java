@@ -39,6 +39,12 @@ public class AccountController {
             return new ResponseEntity<>(accountService.createAccount(input,accounts), HttpStatus.OK);
         return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    @RequestMapping(path="/account/verify", method= RequestMethod.POST)
+    public ResponseEntity<?> verify(@RequestBody AccountModel input){
+        if(input!=null&& input.getNumberAccount()!=null && input.getNumberAccount()!=null)
+            return new ResponseEntity<>(accountService.verify(accounts,input), HttpStatus.OK);
+        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
     @RequestMapping(path="/account/balance", method= RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<?> getBalance(@RequestBody AuthenticationModel input){
@@ -54,11 +60,18 @@ public class AccountController {
             return new ResponseEntity<>(accountService.deposit(input,accounts), HttpStatus.OK);
         return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
+    @RequestMapping(path="/account/withdraw", method= RequestMethod.POST)
+    public ResponseEntity<?> postWithDraw(@RequestBody TransactionModel input){
+        if(input!=null)
+            return new ResponseEntity<>(accountService.withdraw(input,accounts), HttpStatus.OK);
+        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
 
     @RequestMapping(path="/account/trasfer", method= RequestMethod.POST)
     public ResponseEntity<?> postTransfer(@RequestBody TransactionModel input){
         if(input!=null&& input.getToken()!=null && input.getToken()!=null)
-            return new ResponseEntity<>(accountService.transfer(input,accounts), HttpStatus.OK);
+            return new ResponseEntity<>(accountService.transferSameBank(input,accounts), HttpStatus.OK);
         return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 

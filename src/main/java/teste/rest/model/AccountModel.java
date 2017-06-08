@@ -11,17 +11,8 @@ public class AccountModel {
     private double  balance;
     private Integer agency;
     private Integer bank;
-    private String type;
+    private Integer type;
 
-    public AccountModel() {
-        this.id = 1;
-        this.numberAccount = 1249;
-        this.clientPassword = "password";
-        this.balance= 2.0;
-        this.agency = 1515;
-        this.bank =1;
-        this.type="Poupança";
-    }
 
     public int getId() {
         return id;
@@ -71,11 +62,11 @@ public class AccountModel {
         this.bank = bank;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 
@@ -84,8 +75,12 @@ public class AccountModel {
         return true;
     }
     public synchronized boolean withdraw(double value){
-        balance = balance - value;
-        return true;
+        if(balance - value>0) {
+            balance = balance - value;
+            return true;
+        }else{
+            return true;
+        }
     }
     public synchronized double getbalance(double value){
        return value;

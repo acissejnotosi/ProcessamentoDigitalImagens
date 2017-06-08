@@ -16,6 +16,8 @@ public interface AccountService {
     public double getBalance(String token, Map<String, AccountModel> accounts);
     public boolean deposit(TransactionModel input, Map<String, AccountModel> accounts);
     public boolean  withdraw(TransactionModel input, Map<String, AccountModel> accounts);
-    public boolean  transfer(TransactionModel input, Map<String, AccountModel> accounts);
+    public boolean  transferSameBank(TransactionModel input, Map<String, AccountModel> accounts);
+    public boolean transferBetwenbBanks(TransactionModel input, Map<String, AccountModel> accounts);
     public List<AccountModel> listAll(Map<String, AccountModel> account);
+    public String verify(Map<String, AccountModel> account,AccountModel input);
 }
