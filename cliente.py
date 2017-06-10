@@ -12,21 +12,22 @@ while  teste == "false":
     print("1-New Account:")
     print("2-Aready user:")
     menu = input()
-    if menu==1:
+    if menu=="1":
         myaccount = random.randint(1000,9999)
-        print(myaccount)
+        print("MyAccount:",myaccount)
         myagency = random.randint(500,999)
-        print(myagency)
-        data = {"id":1,"clientName":1,"clientPassword":1, "bank":1,"type":1,"numberAccount":myaccount,"agency":myagency}
+        print("MyAgency:",myagency)
+        data = {"id":1,"clientName":1,"clientPassword":1, "bank":1,"type":1,"numberAccount":myaccount,"agency":myagency, "balance":100.0}
         myurl = "http://localhost:8080/account/new"
         headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
         r = requests.post(myurl, data=json.dumps(data), headers=headers)
         token = r.json()["token"]
         pwd = input("New password: ")
-        print(token)
+        #print(token)
         myKeyJson = r.json()
         myKeyTex =ast.literal_eval(r.text)
-        print(myKeyTex)
+        #print(myKeyTex)
+        teste="true"
     else:
         acc = input("Account number: ")
         agency = input("Agency account number: ")
@@ -41,10 +42,10 @@ while  teste == "false":
         if r.text!="false":
             teste="true"
             token = r.json()["token"]
-            print(token)
+            #print(token)
             myKeyJson = r.json()
             myKeyTex = ast.literal_eval(r.text)
-            print(myKeyTex)
+            #print(myKeyTex)
         else:
             print("Client doesn't exist try again")
 
@@ -101,6 +102,7 @@ def transfer():
     headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
     r = requests.post(myurl, data=json.dumps(data), headers=headers)
     teste = r.text
+    print (r.text)
     if teste == "true":
         print("Transfer successful")
     else:

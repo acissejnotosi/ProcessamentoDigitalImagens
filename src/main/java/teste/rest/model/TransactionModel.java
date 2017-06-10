@@ -10,7 +10,7 @@ public class TransactionModel {
     private Integer numberAccount;
     private Integer agency;
     private Integer bank;
-    private String type;
+    private Integer type;
 
     public String getToken() {
         return token;
@@ -52,11 +52,11 @@ public class TransactionModel {
         this.bank = bank;
     }
 
-    public String getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 }

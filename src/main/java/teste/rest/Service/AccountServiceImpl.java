@@ -50,7 +50,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean transferSameBank(TransactionModel input, Map<String, AccountModel> accounts) {
         AccountModel cliente  = accounts.get(input.getToken());
-        if(input.getBank().equals(input.getBank()))
+        if(input.getBank()==cliente.getBank())
          if(input.getType().equals(cliente.getType())){
              return transfer(accounts, input,input.getValue());
          }
@@ -62,8 +62,8 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public boolean transferBetwenbBanks(TransactionModel input, Map<String, AccountModel> accounts) {
         AccountModel cliente  = accounts.get(input.getToken());
-        if(input.getBank().equals(input.getBank()))
-            if(input.getType().equals(cliente.getType())){
+        if(input.getBank()==cliente.getBank())
+            if(input.getType()==cliente.getType()){
                 return transfer(accounts, input,input.getValue()+4.30);
             }
         return false;
@@ -122,7 +122,7 @@ public class AccountServiceImpl implements AccountService {
         if(input.getToken()!=null)
             return input.getToken();
 
-        Set<String> chaves = account.keySet();
+            Set<String> chaves = account.keySet();
         for (Iterator<String> iterator = chaves.iterator(); iterator.hasNext();)
         {
             String chave = iterator.next();
@@ -147,7 +147,7 @@ public class AccountServiceImpl implements AccountService {
         if(key!=null)
             if(account.get(key).getClientPassword().equals(input.getClientPassword()))
                 if (account.get(key).getBank().equals(input.getBank()))
-                    if (account.get(key).getType().equals(input.getType()))
+                    if (account.get(key).getType()==input.getType())
                         return key;
         return "false";
 
@@ -157,9 +157,11 @@ public class AccountServiceImpl implements AccountService {
     public boolean transfer (Map<String, AccountModel> accounts,TransactionModel input, double amout){
 
         if(input.getToken()!=null) {
+            String to = input.getToken();
+            input.setToken(null);
             String keys = findByAccount(accounts, input);
             AccountModel accountModel = accounts.get(keys);
-            AccountModel accountModel2= accounts.get(input.getToken());
+            AccountModel accountModel2= accounts.get(to);
             if(input.getValue()>0&&keys!=null){
                 if(accountModel2.withdraw(amout))
                    return accountModel.deposit(input.getValue());

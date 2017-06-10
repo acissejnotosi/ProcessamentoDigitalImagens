@@ -1,97 +1,131 @@
 #!/usr/bin/python
 #from urllib.request import urlopen
-import urllib.request, json, sys
-from tkinter import *
+import urllib.request, json, sys,requests,ast, random
+#from tkinter import *
 #import urllib, urllib, json, sys
 
 print ("Welcome to REST Bank!")
 
-data = {"id":1,"clientName":"Client Test","clientPassword":"password"}
 
-#req = urllib.Request('http://localhost:8080/account/new')
-#req.add_header('Content-Type', 'application/json') 	
-#response = urllib.urlopen(req, json.dumps(data))
-myurl = "http://localhost:8080/account/new"
-req = urllib.request.Request(myurl)
-req.add_header('Content-Type', 'application/json; charset=utf-8')
-jsondata = json.dumps(data)
-jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
-req.add_header('Content-Length', len(jsondataasbytes))
-print (jsondataasbytes)
-response = urllib.request.urlopen(req, jsondataasbytes) 
-handler = urllib.urlopen(response)
-data = json.loads(handler.read())
-print (data)
-name =input("Yor name: ")
-pwd =input("Password: ")
+teste ="false"
+while  teste == "false":
+    print("1-New Account:")
+    print("2-Aready user:")
+    menu = input()
+    if menu=="1":
+        myaccount = random.randint(1000,9999)
+        print("MyAccount:",myaccount)
+        myagency = random.randint(500,999)
+        print("MyAgency:",myagency)
+        data = {"id":1,"clientName":1,"clientPassword":1, "bank":1,"type":1,"numberAccount":myaccount,"agency":myagency, "balance":100.0}
+        myurl = "http://localhost:8080/account/new"
+        headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+        r = requests.post(myurl, data=json.dumps(data), headers=headers)
+        token = r.json()["token"]
+        pwd = input("New password: ")
+        #print(token)
+        myKeyJson = r.json()
+        myKeyTex =ast.literal_eval(r.text)
+        #print(myKeyTex)
+        teste="true"
+    else:
+        acc = input("Account number: ")
+        agency = input("Agency account number: ")
+        pwd = input("pwd: ")
+        bank = input("Bank: ")
+        type = input("Type: ")
+        data = {"id": 1, "clientName": 1, "clientPassword": pwd, "bank":bank , "type": type, "numberAccount": acc,"agency": agency}
+        myurl = "http://localhost:8080/account/verify"
+        headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+        r = requests.post(myurl, data=json.dumps(data), headers=headers)
+        print(r.text)
+        if r.text!="false":
+            teste="true"
+            token = r.json()["token"]
+            #print(token)
+            myKeyJson = r.json()
+            myKeyTex = ast.literal_eval(r.text)
+            #print(myKeyTex)
+        else:
+            print("Client doesn't exist try again")
 
- 
+
 pwdAgain = input("Again: ")
 while pwd != pwdAgain:
-	pwdAgain =input("Again: ")
-	
+    caspwdAgain = input("Again: ")
 
 
 
-request = urllib.Request("http://localhost:8080/restful-bank/account?clientName=" + name + "&clientPassword=" + pwd)
-handler = urllib.urlopen(request)
-data = json.loads(handler.read())
-
-print ("Created account " + data["accountNumber"])
 
 def balance():
-	acc =input("Account number: ")
-	pwd =input("Password: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/balance?accountNumber=" + acc + "&clientPassword=" + pwd)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
-	print ("Balance: " + data["balance"])
+    myurl = "http://localhost:8080/account/balance"
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data=json.dumps(myKeyTex), headers=headers)
+    print ("Balance: ",r.text)
+
 
 def deposit():
-	acc =input("Account number: ")
-	pwd =input("Password: ")
-	target =input("Target account number: ")
-	amount =input("Amount: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/deposit?accountNumber=" + acc + "&clientPassword=" + pwd + "&targetAccountNumber=" + target + "&amount=" + amount)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
-	print ("Deposit successful")
+    acc =input("Account number: ")
+    agency =input("Agency account number: ")
+    amount =input("Amount: ")
+    data = {"numberAccount":acc,"agency":agency,"value":amount}
+    myurl = "http://localhost:8080/account/deposit"
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data=json.dumps(data), headers=headers)
+    teste =  r.text
+    if teste=="true":
+        print("Deposit successful")
+    else:
+        print("Deposit faild")
+
 
 def withdraw():
-	acc =input("Account number: ")
-	pwd =input("Password: ")
-	amount =input("Amount: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/withdraw?accountNumber=" + acc + "&clientPassword=" + pwd + "&amount=" + amount)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
-	print ("Withdraw successful")
+    myurl = "http://localhost:8080/account/withdraw"
+    amount = input("Amount: ")
+    data = {"token":token,"value": amount}
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data=json.dumps(data), headers=headers)
+    teste = r.text
+    if teste == "true":
+        print("Withdraw successful")
+    else:
+        print("Withdraw faild")
 
 def transfer():
-	acc =input("Account number: ")
-	pwd =input("Password: ")
-	target =input("Target account number: ")
-	amount =input("Amount: ")
-	request = urllib.Request("http://localhost:8080/restful-bank/transfer?fromAccountNumber=" + acc + "&clientPassword=" + pwd + "&toAccountNumber=" + target + "&amount=" + amount)
-	handler = urllib.urlopen(request)
-	data = json.loads(handler.read())
-	print ("Transfer successful")
+    bank= input("Number of bank:")
+    type = input("Type of Account:")
+    acc = input("Account number: ")
+    agency = input("Agency account number: ")
+    amount = input("Amount: ")
+    data = {"numberAccount": acc, "agency": agency, "value": amount,"token":token,"bank":bank,"type":type}
+    myurl = "http://localhost:8080/account/transfer"
+    headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
+    r = requests.post(myurl, data=json.dumps(data), headers=headers)
+    teste = r.text
+    if teste == "true":
+        print("Transfer successful")
+    else:
+        print("Transfer faild")
+
 
 def exit():
-	print ("Bye bye!")
-	sys.exit(0)
+    print ("Bye bye!")
+    sys.exit(0)
 
 options = {"1" : balance,
            "2" : deposit,
            "3" : withdraw,
            "4" : transfer,
            "5" : exit,
-}
+           }
 
 while True:
-	print ("1- Get Balance")
-	print ("2- Deposit")
-	print ("3- Withdraw")
-	print ("4- Transfer")
-	print ("5- Exit")
-	option =input("Select an option: ")
-	options[option]()
+    print ("1- Get Balance")
+    print ("2- Deposit")
+    print ("3- Withdraw")
+    print ("4- Transfer")
+    print ("5- Exit")
+    option =input("Select an option: ")
+    options[option]()
+
+

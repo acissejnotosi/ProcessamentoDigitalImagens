@@ -68,11 +68,11 @@ public class AccountController {
     }
 
 
-    @RequestMapping(path="/account/trasfer", method= RequestMethod.POST)
+    @RequestMapping(path="/account/transfer", method= RequestMethod.POST)
     public ResponseEntity<?> postTransfer(@RequestBody TransactionModel input){
-        if(input!=null&& input.getToken()!=null && input.getToken()!=null)
+        System.out.println("aqiiio");
             return new ResponseEntity<>(accountService.transferSameBank(input,accounts), HttpStatus.OK);
-        return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+
     }
 
 
