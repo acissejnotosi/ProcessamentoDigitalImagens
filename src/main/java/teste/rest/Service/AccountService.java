@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Interface from Account methods
  * Created by allan on 02-06-2017.
  */
 public interface AccountService {

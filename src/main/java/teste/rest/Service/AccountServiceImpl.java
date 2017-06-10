@@ -8,12 +8,18 @@ import teste.rest.model.TransactionModel;
 import java.util.*;
 
 /**
+ * Implement the business rules of account
  * Created by allan on 02-06-2017.
  */
 @Service
 public class AccountServiceImpl implements AccountService {
 
-
+    /**
+     * Instace the new client accout
+     * @param account
+     * @param input
+     * @return AuthenticationModel
+     */
     @Override
     public AuthenticationModel createAccount(AccountModel input, Map<String, AccountModel> account) {
         TransactionModel t = new TransactionModel();
@@ -39,7 +45,12 @@ public class AccountServiceImpl implements AccountService {
         }
         return null;
     }
-
+    /**
+     * Get balance from a account
+     * @param accounts
+     * @param token
+     * @return double
+     */
     @Override
     public double getBalance(String token, Map<String, AccountModel> accounts) {
 
@@ -47,6 +58,12 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    /**
+     * Trasnfer money between accounts
+     * @param input
+     * @param accounts
+     * @return boolean
+     */
     @Override
     public boolean transferSameBank(TransactionModel input, Map<String, AccountModel> accounts) {
         AccountModel cliente  = accounts.get(input.getToken());
@@ -59,6 +76,12 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    /**
+     * Transfer money between banks
+     * @param input
+     * @param accounts
+     * @return boolean
+     */
     @Override
     public boolean transferBetwenbBanks(TransactionModel input, Map<String, AccountModel> accounts) {
         AccountModel cliente  = accounts.get(input.getToken());
@@ -69,6 +92,13 @@ public class AccountServiceImpl implements AccountService {
         return false;
 
     }
+
+    /**
+     * Desposit money from someone have the account number, agency, and type.
+     * @param input
+     * @param accounts
+     * @return boolean
+     */
 
     @Override
     public  boolean deposit(TransactionModel input,Map<String, AccountModel> accounts) {
@@ -90,6 +120,12 @@ public class AccountServiceImpl implements AccountService {
         return false;
     }
 
+    /**
+     * Withdraw the account from account with have a token
+     * @param input
+     * @param accounts
+     * @return boolean
+     */
     @Override
     public boolean withdraw(TransactionModel input, Map<String, AccountModel> accounts) {
 
@@ -100,6 +136,12 @@ public class AccountServiceImpl implements AccountService {
         }
         return false;
     }
+
+    /**
+     * List all Account this only for admin or debug
+     * @param account
+     * @return list
+     */
 
     @Override
     public List<AccountModel> listAll(Map<String, AccountModel> account) {
@@ -116,6 +158,13 @@ public class AccountServiceImpl implements AccountService {
         }
         return accountModelList;
     }
+
+    /**
+     * Search  in hashMap the account by numberAccount and agencyAccount
+     * @param account
+     * @param input
+     * @return String is  token from the hash where the user are stored
+     */
 
     public String findByAccount(Map<String, AccountModel> account,TransactionModel input) {
 
@@ -138,6 +187,14 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    /**
+     * Search in hashMap the account by password, bank, type
+     * @param account
+     * @param input
+     * @return String is  token from the hash where the user are stored
+     */
+
+
     public String verify(Map<String, AccountModel> account,AccountModel input)
     {
         TransactionModel t = new TransactionModel();
@@ -153,7 +210,13 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
-
+    /**
+     * Just implement the tranfer
+     * @param accounts
+     * @param input
+     * @param amout
+     * @return boolean
+     */
     public boolean transfer (Map<String, AccountModel> accounts,TransactionModel input, double amout){
 
         if(input.getToken()!=null) {

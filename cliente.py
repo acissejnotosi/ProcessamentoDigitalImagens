@@ -1,12 +1,16 @@
 #!/usr/bin/python
-#from urllib.request import urlopen
+##Client RestFul in python
+##Author: Allan Patrick
+##Distribuidos
+## run command line use $ python3 client.py
+
+
 import urllib.request, json, sys,requests,ast, random
-#from tkinter import *
-#import urllib, urllib, json, sys
+
 
 print ("Welcome to REST Bank!")
 
-
+# Cliente brief entry witch the client have the option to entry with a account already existence
 teste ="false"
 while  teste == "false":
     print("1-New Account:")
@@ -50,13 +54,14 @@ while  teste == "false":
             print("Client doesn't exist try again")
 
 
-pwdAgain = input("Again: ")
-while pwd != pwdAgain:
-    caspwdAgain = input("Again: ")
+pwdconfirm = input("confirm: ")
+while pwd != pwdconfirm:
+    pwdconfirmed = input("confirm: ")
 
 
 
-
+# Calls the method get balance in the server for this client
+# Send a json with token
 def balance():
     myurl = "http://localhost:8080/account/balance"
     headers = {'Content-type': 'application/json', 'Accept': 'application/json'}
@@ -64,6 +69,8 @@ def balance():
     print ("Balance: ",r.text)
 
 
+# Calls the method deposit somewhere  account informed by account number , agency and type
+# Send a json with token or dates of an account
 def deposit():
     acc =input("Account number: ")
     agency =input("Agency account number: ")
@@ -78,7 +85,8 @@ def deposit():
     else:
         print("Deposit faild")
 
-
+# Calls the method withdraw into the server from this client account
+# Send a json with token
 def withdraw():
     myurl = "http://localhost:8080/account/withdraw"
     amount = input("Amount: ")
@@ -90,7 +98,8 @@ def withdraw():
         print("Withdraw successful")
     else:
         print("Withdraw faild")
-
+# Calls the method  transfer into the server from this client account  to another specified in the json
+# Send a json with token and data from the account witch wish transfer
 def transfer():
     bank= input("Number of bank:")
     type = input("Type of Account:")
@@ -119,7 +128,7 @@ options = {"1" : balance,
            "4" : transfer,
            "5" : exit,
            }
-
+#the mamu options
 while True:
     print ("1- Get Balance")
     print ("2- Deposit")

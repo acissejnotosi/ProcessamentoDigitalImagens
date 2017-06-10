@@ -1,7 +1,9 @@
 package teste.rest.model;
 
 /**
+ * This Model is used when the client wants transfer money
  * Created by allan on 02-06-2017.
+ *
  */
 public class TransactionModel {
 
@@ -11,6 +13,8 @@ public class TransactionModel {
     private Integer agency;
     private Integer bank;
     private Integer type;
+
+
 
     public String getToken() {
         return token;
