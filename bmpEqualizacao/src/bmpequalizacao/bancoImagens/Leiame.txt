@@ -1,0 +1,137 @@
+As seguintes imagens deverão ser segmentadas resultando na imagem afinada
+do objeto a ser identificado.
+Deverá ser entregue relatório mostrando passo a passo as operações realizadas
+e a imagem resultante após a aplicação de cada operação.
+
+A seguir identifica-se o grupo que escolheu a imagem, a origem da aquisição e o 
+objeto a ser segmentado em cada imagem.
+
+aircraft -
+Fotografia. Objeto: aeronave
+
+areaverde -
+Fotografia aérea. Objeto: árvores e arbustos no centro esquerdo. 
+
+bola
+Fotografia. Objeto: bola. 
+
+bone
+Fotografia. Objeto: ossos. 
+
+building
+Fotografia. Objeto: Construções. 
+
+cachorro
+Fotografia. Objeto: animal.
+ 
+caracteres
+Fotografia. Objeto: caracteres das moedas com ou sem as bordas das moedas.
+
+celulas
+Fotografia microscópica. Objeto: células.
+
+chinese_coin - André Kantek e Amauri Assef
+Fotografia. Objeto: caracteres das moedas com ou sem as bordas das moedas.
+
+cigarros 
+Fotografia. Objeto: cigarros
+
+cropmark
+Fotografia. Objeto: Linhas das parcelas no campo.
+
+dentes1
+Radiografia. Objeto: Dentes.
+
+esq_bisao
+Fotografia. Objeto: esqueleto de bisão. 
+
+fibroma1
+Radiografia. Objeto: Fibroma.
+
+fibroma2
+Radiografia. Objeto: Fibroma.
+
+fibroma3
+Radiografia. Objeto: Fibroma.
+
+flower
+Fotografia. Objeto: flores. 
+
+fsfw-aircraft
+Fotografia. Objeto: aeronave
+
+furo
+Fotografia. Objeto: furo. 
+
+hansen
+Fotografia. Objeto: mancha de hanseníase
+
+ilha
+Fotografia aérea. Objeto: ilha
+
+leish
+Fotografia. Objeto: mancha de leishmaniose
+
+lesao
+Fotografia. Objeto: lesão
+
+limao
+Fotografia. Objeto: lesão
+
+marcador1 - Lucas e Ricardo
+Fotografia. Objeto: marcadores
+
+marcador2
+Fotografia. Objeto: marcadores
+
+nadad2
+Fotografia. Objeto: nadadeira
+
+nadadeira
+Fotografia. Objeto: nadadeira
+
+nucleo
+Fotografia microscópica. Objeto: núcleo das células.
+
+pessoas
+Fotografia. Objeto: pessoas
+
+pessoas2
+Fotografia. Objeto: pessoas
+
+radar_ruas
+Radar. Objeto: ruas.
+
+rede-hidro
+Imagem de satélite. Objeto: rede hidrográfica
+
+regioes_verdes
+Fotografia aérea. Objeto: Ilhas
+
+regioes_verdes2
+Imagem de satélite. Objeto: rede hidrográfica
+
+rios
+Imagem de satélite. Objeto: rede hidrográfica
+
+ruas
+Fotografia aérea. Objeto: Ruas
+
+shell
+Fotografia. Objeto: conchas
+
+Skelite
+Fotografia microscópica. Objeto: células de skelite
+
+teleangiectasia
+Fotografia. Objeto: manchas de teleangiectasia
+
+vitiligo
+Fotografia. Objeto: manchas de vitiligo
+
+vulcao
+Fotografia aérea. Objeto: Vulcões
+
+yuan-rare
+Fotografia. Objeto: efígie com ou sem bordas, com ou sem caracteres 
+
